@@ -21,8 +21,13 @@ settings:
     - bookmarks
     - history
     - filesystem
+  content.blocking.hosts.lists:
+    global:
+    - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
   content.javascript.clipboard:
     https://m365.cloud.microsoft: access-paste
+  content.pdfjs:
+    global: true
   downloads.location.directory:
     global: ~/Downloads
   downloads.location.prompt:
