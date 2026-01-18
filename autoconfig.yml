@@ -21,6 +21,8 @@ settings:
     - bookmarks
     - history
     - filesystem
+  content.javascript.clipboard:
+    https://m365.cloud.microsoft: access-paste
   downloads.location.directory:
     global: ~/Downloads
   downloads.location.prompt:
