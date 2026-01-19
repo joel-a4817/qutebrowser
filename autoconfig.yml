@@ -8,6 +8,8 @@ config_version: 2
 settings:
   auto_save.session:
     global: true
+  backend:
+    global: webengine
   bindings.commands:
     global:
       normal:
@@ -21,23 +23,34 @@ settings:
     - bookmarks
     - history
     - filesystem
-  content.blocking.hosts.lists:
-    global:
-    - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
   content.javascript.clipboard:
     https://m365.cloud.microsoft: access-paste
   content.pdfjs:
     global: true
+  content.register_protocol_handler:
+    https://outlook.office.com?mailtouri=%25s: true
   downloads.location.directory:
     global: ~/Downloads
   downloads.location.prompt:
     global: false
   fonts.completion.category:
     global: bold default_size default_family
+  fonts.contextmenu:
+    global: default_size default_family
+  fonts.debug_console:
+    global: default_size default_family
   fonts.default_family:
     global: JetBrainsMono Nerd Font
   fonts.default_size:
     global: 16pt
+  fonts.messages.warning:
+    global: default_size default_family
+  fonts.prompts:
+    global: default_size default_family
+  fonts.tabs.unselected:
+    global: default_size default_family
+  fonts.tooltip:
+    global: default_size default_family
   fonts.web.family.cursive:
     global: JetBrainsMono Nerd Font
   fonts.web.family.fantasy:
