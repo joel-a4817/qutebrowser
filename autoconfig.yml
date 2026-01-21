@@ -7,7 +7,7 @@
 config_version: 2
 settings:
   auto_save.session:
-    global: true
+    global: false
   backend:
     global: webengine
   bindings.commands:
@@ -23,8 +23,10 @@ settings:
     - bookmarks
     - history
     - filesystem
+  content.blocking.method:
+    global: both
   content.javascript.clipboard:
-    https://m365.cloud.microsoft: access-paste
+    global: access-paste
   content.pdfjs:
     global: true
   content.register_protocol_handler:
@@ -72,6 +74,8 @@ settings:
   fonts.web.size.minimum_logical:
     global: 16
   scrolling.smooth:
+    global: true
+  session.lazy_restore:
     global: true
   url.default_page:
     global: about:blank
