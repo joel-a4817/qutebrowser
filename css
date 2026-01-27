@@ -9,7 +9,6 @@
  * No parent-container :has() nukes.
  *******************************************************/
 
-
 /*********************************
  * YouTube declutter
  *********************************/
@@ -38,6 +37,10 @@ ytd-reel-shelf-renderer {
   display: none !important;
 }
 
+/* Hide end of video recommendeds */
+.ytp-fullscreen-grid-stills-container {
+  display: none !important;
+}
 
 /*********************************
  * YouTube: Hide Explore section (and everything under it)
