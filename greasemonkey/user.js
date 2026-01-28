@@ -1,14 +1,20 @@
-/*******************************************************
- * qutebrowser user stylesheet
- * YouTube + Instagram declutter (CSS-only)
- *
- * SAFE Instagram additions:
- *  - hide loading spinner (only progressbar + a couple of very specific spinners)
- *  - hide footer (footer / role=contentinfo only)
- *
- * No parent-container :has() nukes.
- *******************************************************/
+// ==UserScript==
+// @name         qute: YouTube + Instagram CSS (scoped)
+// @description  Injects declutter CSS only on youtube.com / instagram.com (safe timing)
+// @match        *://*.youtube.com/*
+// @match        *://youtube.com/*
+// @match        *://*.instagram.com/*
+// @match        *://instagram.com/*
+// @run-at       document-start
+// @noframes
+// ==/UserScript==
 
+(() => {
+  'use strict';
+
+  // ---- PUT YOUR CSS HERE ----
+  // Split it so IG rules never touch YT and vice-versa.
+  const YT_CSS = `
 /*********************************
  * YouTube declutter
  *********************************/
@@ -105,8 +111,9 @@ ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer {
 ytd-browse[page-subtype="home"] #contents {
   display: none !important;
 }
+`;
 
-
+  const IG_CSS = `
 /*********************************
  * Instagram declutter (CSS-only)
  * Keep Stories visible.
@@ -177,3 +184,38 @@ footer,
 .html-div.xdj266r.x14z9mp.xat24cr.x1lziwak.xexx8yu.xyri2b.x18d9i69.x1c1uobl.x9f619.xjbqb8w.x78zum5.x15mokao.x1ga7v0g.x16uus16.xbiv7yw.x1uhb9sk.x1plvlek.xryxfnj.x1c4vz4f.x2lah0s.xdt5ytf.xqjyukv.x6s0dn4.x1oa3qoh.x1nhvcw1 {
   display: none !important;
 }
+`;
+
+  function pickCss() {
+    const host = location.hostname;
+    if (host === 'youtube.com' || host.endsWith('.youtube.com')) return YT_CSS;
+    if (host === 'instagram.com' || host.endsWith('.instagram.com')) return IG_CSS;
+    return '';
+  }
+
+  const css = pickCss();
+  if (!css || !css.trim()) return;
+
+  const style = document.createElement('style');
+  style.setAttribute('data-qute-site-css', 'yt-ig');
+  style.textContent = css;
+
+  // Robust injection: don't touch document directly, and don't assume head/html exists yet.
+  const tryInject = () => {
+    const target = document.head || document.documentElement;
+    if (!target) return false;
+    target.appendChild(style);
+    return true;
+  };
+
+  if (tryInject()) return;
+
+  // If DOM isn't ready yet (common at document-start), wait until head/html appears.
+  const obs = new MutationObserver(() => {
+    if (tryInject()) obs.disconnect();
+  });
+
+  // Observe the documentElement once it exists, otherwise observe document for it.
+  // (Observing `document` is fine; appending to `document` is what causes chaos.)
+  obs.observe(document, { childList: true, subtree: true });
+})();
