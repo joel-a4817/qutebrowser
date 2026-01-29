@@ -29,6 +29,8 @@ settings:
     - filesystem
   content.blocking.method:
     global: both
+  content.geolocation:
+    https://outlook.office.com: false
   content.javascript.clipboard:
     global: access-paste
   content.pdfjs:
